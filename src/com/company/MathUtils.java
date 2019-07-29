@@ -8,16 +8,6 @@ import java.util.List;
 public class MathUtils {
 
     public static double average(int[] numbers) {
-        //        int average = 0;
-//        if (numbers.length > 0) {
-//            long sum = 0;
-//            for (int j = 0; j < numbers.length; j++) {
-//                sum += numbers[j];
-//            }
-//            average = Math.round(sum / numbers.length);
-//        }
-//        System.out.println(average);
-
         return Arrays.stream(numbers).average().getAsDouble();
     }
 
@@ -34,6 +24,4 @@ public class MathUtils {
         long timeConsumedMillis = finish - start;
         System.out.println("Время выполнения: " + timeConsumedMillis);
     }
-
-
 }

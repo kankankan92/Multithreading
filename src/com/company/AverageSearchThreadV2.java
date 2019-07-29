@@ -5,9 +5,10 @@ import java.util.List;
 
 public class AverageSearchThreadV2 extends Thread {
 
-    List<String> fileNames;
-    int numberThread;
-    int countThreads;
+    private List<String> fileNames;
+    private int numberThread;
+    private int countThreads;
+    private double average;
 
     AverageSearchThreadV2(List<String> fileNames, int numberThread, int countThreads) {
         this.fileNames = fileNames;
@@ -31,10 +32,14 @@ public class AverageSearchThreadV2 extends Thread {
                 iterations++;
             }
         }
-        double average = sum / iterations;
+        average = sum / iterations;
         System.out.println("Cреднее арифметическое: " + average);
         long finish = System.currentTimeMillis();
         long timeConsumedMillis = finish - start;
         System.out.println("Время выполнения: " + timeConsumedMillis);
+    }
+
+    public double getAverage() {
+        return average;
     }
 }

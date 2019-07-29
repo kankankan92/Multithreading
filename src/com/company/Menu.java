@@ -19,33 +19,11 @@ public class Menu {
                     scan.nextLine();
                     FileCreationThread fileCreationThread = new FileCreationThread(n, m);
                     fileCreationThread.start();
-//                    MyFileUtils.createFiles(n, m);
                     break;
                 case "2":
                     MathUtils.averageInAllFiles();
-//                    MyFileUtils.fileToArray("1.txt");
                     break;
                 case "3":
-//                    List<String> fileNames = MyFileUtils.getFilesNames();
-//                    if(fileNames.size()<10){
-//                        for (int i = 0; i<fileNames.size(); i++){
-//                            List<String> filesForThread = new ArrayList<>();
-//                            filesForThread.add(fileNames.get(i));
-//                            AverageSearchThread averageSearchThread = new AverageSearchThread(filesForThread);
-//                            averageSearchThread.start();
-//                        }
-//                    }else {
-//                        int count = Math.round(fileNames.size()/10);
-//                        for (int i = 0; i<fileNames.size(); i += count){
-//                            List<String> filesForThread = new ArrayList<>();
-//                            //небходимо лист fileNames разделить на кусочки между потоками
-//                            filesForThread = fileNames.subList(i, i+count);
-//                            AverageSearchThread averageSearchThread = new AverageSearchThread(filesForThread);
-//                            averageSearchThread.start();
-//                        }
-//                    }
-//                    AverageSearchThread averageSearchThread = new AverageSearchThread(MyFileUtils.getFilesNames());
-//                    averageSearchThread.start();
                     int countThreads = 10;
                     List<String> fileNames = MyFileUtils.getFilesNames();
                     for (int i = 0; i < countThreads; i++) {
@@ -58,14 +36,16 @@ public class Menu {
                         AverageSearchThread averageSearchThread = new AverageSearchThread(filesForThread);
                         averageSearchThread.start();
                     }
+                    //неообходим собрать результаты рабты всех тредов и найти по ним среднее арифметическое
                     break;
                 case "4":
-                    int countThreads1 = 10;
+                    countThreads = 10;
                     List<String> fileNames1 = MyFileUtils.getFilesNames();
-                    for (int i = 1; i <= countThreads1; i++) {
-                        AverageSearchThreadV2 averageSearchThreadV2 = new AverageSearchThreadV2(fileNames1, i, countThreads1);
+                    for (int i = 1; i <= countThreads; i++) {
+                        AverageSearchThreadV2 averageSearchThreadV2 = new AverageSearchThreadV2(fileNames1, i, countThreads);
                         averageSearchThreadV2.start();
                     }
+                    //неообходим собрать результаты рабты всех тредов и найти по ним среднее арифметическое
                     break;
             }
             scan.reset();

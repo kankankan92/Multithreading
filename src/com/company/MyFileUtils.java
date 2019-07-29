@@ -25,15 +25,17 @@ public class MyFileUtils {
         Files.write(path, numbers, StandardCharsets.UTF_8);
     }
 
-    public static void createFiles(int filesCount, int numbersCount) throws IOException {
+    public static synchronized void createFiles(int filesCount, int numbersCount) throws IOException {
         long start = System.currentTimeMillis();
         File file = new File("c:/Users/Anastasia/Projects/Multithreading/files");
+
         FileUtils.cleanDirectory(file);
         int n = filesCount;
         while (n > 0) {
             MyFileUtils.createFile(numbersCount, n);
             n--;
         }
+
         long finish = System.currentTimeMillis();
         long timeConsumedMillis = finish - start;
         System.out.println("Время выполнения: " + timeConsumedMillis);
@@ -43,15 +45,11 @@ public class MyFileUtils {
         Path path = Paths.get("c:/Users/Anastasia/Projects/Multithreading/files/" + fileName);
         List<String> numbers = Files.readAllLines(path);
         List<Integer> numbersInteger = new ArrayList<>();
-        for (String number:numbers) {
+        for (String number : numbers) {
             numbersInteger.add(Integer.parseInt(number));
         }
-        int[] nums = numbersInteger.stream().mapToInt(i -> i).toArray();
-//        for (int number:nums) {
-//            System.out.println(number);
-//        }
 
-        return nums;
+        return numbersInteger.stream().mapToInt(i -> i).toArray();
     }
 
     public static List<String> getFilesNames() throws IOException {
@@ -65,13 +63,5 @@ public class MyFileUtils {
         return names;
     }
 
-    public static void distributingFilesByThreads() throws IOException {
-        List<String> fileNames = getFilesNames();
-        if(fileNames.size()<10){
-            for (int i = 0; i<fileNames.size(); i++){
-
-            }
-        }
-    }
 }
 
