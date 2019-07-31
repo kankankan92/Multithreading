@@ -14,7 +14,7 @@ public class AverageSearchThread extends Thread {
 
     @Override
     public void run() {
-        long start = System.currentTimeMillis();
+//        long start = System.currentTimeMillis();
         double sum = 0;
         for (String name : fileNames) {
             try {
@@ -24,10 +24,10 @@ public class AverageSearchThread extends Thread {
             }
         }
         average = sum / fileNames.size();
-        System.out.println("Cреднее арифметическое: " + average);
-        long finish = System.currentTimeMillis();
-        long timeConsumedMillis = finish - start;
-        System.out.println("Время выполнения: " + timeConsumedMillis);
+//        System.out.println("Cреднее арифметическое: " + average);
+//        long finish = System.currentTimeMillis();
+//        long timeConsumedMillis = finish - start;
+//        System.out.println("Время выполнения: " + timeConsumedMillis);
     }
 
     public double getAverage() {

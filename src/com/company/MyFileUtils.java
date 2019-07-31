@@ -19,7 +19,7 @@ public class MyFileUtils {
         Random random = new Random();
         List<String> numbers = new ArrayList<>();
         for (int i = numbersCount; i > 0; i--) {
-            numbers.add(String.valueOf(random.nextInt()));
+            numbers.add(String.valueOf(random.nextInt(100)));
         }
         Files.createFile(path);
         Files.write(path, numbers, StandardCharsets.UTF_8);
@@ -52,8 +52,8 @@ public class MyFileUtils {
         return numbersInteger.stream().mapToInt(i -> i).toArray();
     }
 
-    public static List<String> getFilesNames() throws IOException {
-        List<String> names = new ArrayList<String>();
+    public static List<String> getFilesNames(){
+        List<String> names = new ArrayList<>();
         File[] files = new File("c:/Users/Anastasia/Projects/Multithreading/files").listFiles();
         for (File file : files) {
             if (file.isFile()) {
@@ -64,4 +64,3 @@ public class MyFileUtils {
     }
 
 }
-

@@ -5,9 +5,10 @@ import java.io.IOException;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
         Menu.start();
 //        MathUtils.averageInAllFiles();
 //        System.out.println("Main end");
+        new Thread();
     }
 }
