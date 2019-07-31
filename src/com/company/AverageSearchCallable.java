@@ -3,25 +3,22 @@ package com.company;
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.Callable;
-import java.util.concurrent.CountDownLatch;
 
-public class AverageSearchThreadV2 extends Thread {
+public class AverageSearchCallable implements Callable<Double> {
 
     private List<String> fileNames;
     private int numberThread;
     private int countThreads;
-    private double average;
-    private CountDownLatch countDownLatch;
 
-    AverageSearchThreadV2(List<String> fileNames, int numberThread, int countThreads, CountDownLatch countDownLatch) {
+    AverageSearchCallable(List<String> fileNames, int numberThread, int countThreads) {
         this.fileNames = fileNames;
         this.numberThread = numberThread;
         this.countThreads = countThreads;
-        this.countDownLatch = countDownLatch;
     }
 
     @Override
-    public void run() {
+    public Double call() throws Exception {
+//        long start = System.currentTimeMillis();
         double sum = 0;
         int iterations = 0;
         for (int fileNumber = numberThread; fileNumber < fileNames.size(); fileNumber += countThreads) {
@@ -35,13 +32,10 @@ public class AverageSearchThreadV2 extends Thread {
                 iterations++;
             }
         }
-        average = sum / iterations;
-        countDownLatch.countDown();
-    }
-
-    public double getAverage() {
-        return average;
+        return sum / iterations;
+//        System.out.println("Cреднее арифметическое: " + average);
+//        long finish = System.currentTimeMillis();
+//        long timeConsumedMillis = finish - start;
+//        System.out.println("Время выполнения: " + timeConsumedMillis);
     }
 }
-
-
