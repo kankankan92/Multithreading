@@ -5,10 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
 public class Menu {
-    public static void start() throws IOException, InterruptedException {
+    public static void start() throws IOException, InterruptedException, ExecutionException {
         Scanner scan = new Scanner(System.in);
         while (true) {
             System.out.println("1.Сгенерировать n файлов по m строк \n2.Поиск среднего арифметического \n3.Поиск среднего арифметического в многопоточном режиме \n4.Поиск среднего арифметического в многопоточном режиме V2 \n5.Поиск среднего арифметического в многопоточном режиме V3");
@@ -85,22 +86,36 @@ public class Menu {
                     long finish2 = System.currentTimeMillis();
                     long timeConsumedMillis2 = finish2 - start2;
                     System.out.println("Время выполнения: " + timeConsumedMillis2);
-                    //неообходим собрать результаты работы всех тредов и найти по ним среднее арифметическое
                     break;
 
                 case "5":
 
+                    //реализация подсчета сренего арифметического с помощью Thread, класса FutureTask.
+                    long start3 = System.currentTimeMillis();
                     List<String> fileNames2 = MyFileUtils.getFilesNames();
                     if (fileNames2.size() > 10) {
                         countThreads = 10;
                     } else {
                         countThreads = fileNames2.size();
                     }
+                    List<FutureTask<Double>> futureTasks = new ArrayList<>();
                     for (int i = 0; i < countThreads; i++) {
                         AverageSearchCallable averageSearchCallable = new AverageSearchCallable(fileNames2, i, countThreads);
-                        FutureTask futureTask = new FutureTask(averageSearchCallable);
-//                        futureTask.run();
+                        FutureTask<Double> futureTask = new FutureTask(averageSearchCallable);
+                        futureTasks.add(futureTask);
+                        Thread thread = new Thread(futureTask);
+                        thread.start();
                     }
+                    double sum3 = 0;
+                    for (FutureTask<Double> futureTask : futureTasks) {
+                        sum3 += futureTask.get();
+                    }
+                    double average3 = sum3 / futureTasks.size();
+                    System.out.println("Среднее арифметическое по всем файлам:" + average3);
+                    long finish3 = System.currentTimeMillis();
+                    long timeConsumedMillis3 = finish3 - start3;
+                    System.out.println("Время выполнения: " + timeConsumedMillis3);
+                    break;
             }
             scan.reset();
         }
